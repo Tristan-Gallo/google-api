@@ -15,12 +15,12 @@ export class AppComponent implements AfterViewInit {
   title = 'server mappe';
   //Aggiungiamo latitudine e longitudine di un luogo
   center: google.maps.LatLngLiteral = { lat: 45.506738, lng: 9.190766 };
-  geoJsonObject! : GeoFeatureCollection;
+  geoJsonObject!: GeoFeatureCollection;
   fillColor: string = "#FF0000";  //Colore delle zone catastali
-  styleFunc = (feature:any) =>{
-    console.log(feature.i.id)
+  styleFunc = (feature: any) => {
+    console.log(feature)
     let newColor = "#FF0000"; //RED
-    if(feature.i.id == 0) newColor = "#00FF00"; //GREEN
+    if (feature.h.id == 0) newColor = "#00FF00"; //GREEN
     else newColor = "#0000FF"; //BLUE
     return ({
       clickable: false,
@@ -28,21 +28,22 @@ export class AppComponent implements AfterViewInit {
       strokeWeight: 1
     });
   }
- 
-  markerList! : google.maps.MarkerOptions[];
+
+  markerList!: google.maps.MarkerOptions[];
   zoom = 8;
-  @ViewChild('mapRef') mapRef!: GoogleMap;
+  @ViewChild('mapRef')
+  mapRef!: GoogleMap;
   ngAfterViewInit() {
-  this.mapRef.data.addGeoJson(this.geoJsonObject);
-  this.mapRef.data.setStyle(this.styleFunc);
-  
-}
+    this.mapRef.data.addGeoJson(this.geoJsonObject);
+    this.mapRef.data.setStyle(this.styleFunc);
+
+  }
   constructor() {
 
     //Questi dati dovremmo scaricarli dal server, per ora li abbiamo copiati nel file     gojson.model.ts
-    this.geoJsonObject = GEOJSON;  
+    this.geoJsonObject = GEOJSON;
     console.log(this.geoJsonObject); //stampo l'oggetto geoJsonObject sulla console
-    
+
 
   }
 }
